@@ -18,68 +18,109 @@
         this.length = length;
 
         this.getData = function () {
-            
-            return '' + this.title + ' ' + this.length + 'min' + ' ' + this.genre;
+            return '' + this.title + ', ' + this.length + ' min' + ', ' + this.genre.getData();
         }
     }
 
     function Program(date) {
-        this.date = date;
+        this.date = new Date(date);
         this.list = [];
         this.totalNumberOfMovies = 0;
-        
-        
-    this.addMovie = function (news) {
+
+
+        this.addMovie = function (news) {
             this.list.push(news);
             this.totalNumberOfMovies++;
         }
-    this.getData= function (){
-        var totalLength = 0
-        totalLength+= totalMovielength; 
-        console.log(totalLength);
-        return '' + this.date + '\n' + this.list
+
+        this.programLength = function () {
+            var totalMovielength = 0;
+
+            for (var i = 0; i < this.list.length; i++) {
+                totalMovielength += this.list[i].length;
+
+            }
+
+            return totalMovielength;
+        }
+
+        this.listOfMovies = function () {
+            var listOfAllMovies = '';
+
+            for (var i = 0; i < this.list.length; i++) {
+                listOfAllMovies += '\t\t\t\t\t\t' + this.list[i].getData() + '\n'
+            }
+
+            return listOfAllMovies;
+        }
+
+        this.getData = function () {
+
+            return '' + this.date.toLocaleDateString() + ', program duration ' + this.programLength() + 'min' + '\n' + this.listOfMovies();
+        }
+
+
     }
 
-    
-    }
-    // The string should contain date, program length (calculated from length of all movies in a list)
-    //  and data about movies in a list (see the example below). To display movie data, use Movie’s getData method.
 
+    function Festival(name) {
+        this.name = name;
+        this.listOfPrograms = [];
 
-    function Festival(name){
-        this.name=name;
-        this.listOfPrograms=[];
-        
-        this.addProgram= function (newProgram){
+        this.addProgram = function (newProgram) {
             this.listOfPrograms.push(newProgram);
         }
-        
-        this.numberOfMoviesInAllPrograms= function (){
-            for (var i=0;i<listOfPrograms.length;i++){
-                var counter=0;
-                counter++;
+
+        this.numberOfMoviesInAllPrograms = function () {
+            var counter = 0;
+
+            for (var i = 0; i < this.listOfPrograms.length; i++) {
+                counter += this.listOfPrograms[i].totalNumberOfMovies;
             }
-            return counter;
+
+            return counter + ' movie titles';
+        }
+
+        this.listOfThePrograms = function () {
+            var listOfAllPrograms = '';
+            for (var i = 0; i < this.listOfPrograms.length; i++) {
+                listOfAllPrograms += '\t\t\t' + this.listOfPrograms[i].getData();
+            }
+            return listOfAllPrograms;
+        }
+
+        this.getData = function () {
+            return '' + this.name + ' has ' + this.numberOfMoviesInAllPrograms() + '\n' + this.listOfThePrograms();
         }
     }
 
 
+    function createMovie(title, name, length) {
+        var genreObject = new Genre(name);
+        return new Movie(title, genreObject, length);
+    }
 
-    var action = new Genre("Action").getData();
+    function createProgram(date) {
 
-    var film = new Movie("film", action, 123);
-    var film2 = new Movie("film2", action, 123);
-    var totalMovielength = film.length + film2.length;
-    // console.log(totalMovielength);
+        return new Program(date);
+    };
 
-    var domestic = new Program('10.02');
-    domestic.addMovie(film.getData());
-    domestic.addMovie(film2.getData());
+    var film1 = createMovie("Spider-Man:Homecoming", 'Action', 133);
+    var film2 = createMovie("War for the Planet of the Apes", 'Drama', 140);
+    var film3 = createMovie("The Dark Tower", 'Western', 95);
+    var film4 = createMovie('Deadpool', 'Comedy', 108);
 
-    var fest= new Festival ('Summer');
-    fest.addProgram(domestic.getData());
-    console.log(fest);
-   
+    var sciFi = createProgram('10 28 2019.');
+    sciFi.addMovie(film1);
+    sciFi.addMovie(film2);
+    sciFi.addMovie(film3)
+    var happy = createProgram('10 29 2019.');
+    happy.addMovie(film4);
 
 
+    var weekendFest = new Festival('Weekend festival');
+    weekendFest.addProgram(sciFi);
+    weekendFest.addProgram(happy);
+
+    console.log(weekendFest.getData());
 })();
