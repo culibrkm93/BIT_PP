@@ -5,11 +5,11 @@
     function Genre(name) {
         this.name = name;
 
-        this.getData = function () {
-            var firstLetter = this.name.slice(0, 1);
-            var lastLetter = this.name.slice(this.name.length - 1, this.name.length);
-            return '' + firstLetter.toUpperCase('') + lastLetter.toUpperCase('');
-        }
+    }
+    Genre.prototype.getData = function () {
+        var firstLetter = this.name.charAt(0);
+        var lastLetter = this.name.charAt(this.name.length - 1);
+        return firstLetter.toUpperCase() + lastLetter.toUpperCase();
     }
 
     function Movie(title, genre, length) {
@@ -17,81 +17,76 @@
         this.genre = genre;
         this.length = length;
 
-        this.getData = function () {
-            return '' + this.title + ', ' + this.length + ' min' + ', ' + this.genre.getData();
-        }
+    }
+    Movie.prototype.getData = function () {
+        return this.title + ', ' + this.length + ' min' + ', ' + this.genre.getData();
     }
 
     function Program(date) {
         this.date = new Date(date);
         this.list = [];
         this.totalNumberOfMovies = 0;
+    }
+    Program.prototype.addMovie = function (news) {
+        this.list.push(news);
+        this.totalNumberOfMovies++;
+    }
 
+    Program.prototype.programLength = function () {
+        var totalMovielength = 0;
 
-        this.addMovie = function (news) {
-            this.list.push(news);
-            this.totalNumberOfMovies++;
+        for (var i = 0; i < this.list.length; i++) {
+            totalMovielength += this.list[i].length;
+
         }
 
-        this.programLength = function () {
-            var totalMovielength = 0;
+        return totalMovielength;
+    }
 
-            for (var i = 0; i < this.list.length; i++) {
-                totalMovielength += this.list[i].length;
+    Program.prototype.listOfMovies = function () {
+        var listOfAllMovies = '';
 
-            }
-
-            return totalMovielength;
+        for (var i = 0; i < this.list.length; i++) {
+            listOfAllMovies += '\t\t\t\t\t\t' + this.list[i].getData() + '\n'
         }
 
-        this.listOfMovies = function () {
-            var listOfAllMovies = '';
+        return listOfAllMovies;
+    }
 
-            for (var i = 0; i < this.list.length; i++) {
-                listOfAllMovies += '\t\t\t\t\t\t' + this.list[i].getData() + '\n'
-            }
+    Program.prototype.getData = function () {
 
-            return listOfAllMovies;
-        }
-
-        this.getData = function () {
-
-            return '' + this.date.toLocaleDateString() + ', program duration ' + this.programLength() + 'min' + '\n' + this.listOfMovies();
-        }
-
-
+        return this.date.toLocaleDateString() + ', program duration ' + this.programLength() + 'min' + '\n' + this.listOfMovies();
     }
 
 
     function Festival(name) {
         this.name = name;
         this.listOfPrograms = [];
+    }
+    Festival.prototype.addProgram = function (newProgram) {
+        this.listOfPrograms.push(newProgram);
+    }
 
-        this.addProgram = function (newProgram) {
-            this.listOfPrograms.push(newProgram);
+    Festival.prototype.numberOfMoviesInAllPrograms = function () {
+        var counter = 0;
+
+        for (var i = 0; i < this.listOfPrograms.length; i++) {
+            counter += this.listOfPrograms[i].totalNumberOfMovies;
         }
 
-        this.numberOfMoviesInAllPrograms = function () {
-            var counter = 0;
+        return counter + ' movie titles';
+    }
 
-            for (var i = 0; i < this.listOfPrograms.length; i++) {
-                counter += this.listOfPrograms[i].totalNumberOfMovies;
-            }
-
-            return counter + ' movie titles';
+    Festival.prototype.listOfThePrograms = function () {
+        var listOfAllPrograms = '';
+        for (var i = 0; i < this.listOfPrograms.length; i++) {
+            listOfAllPrograms += '\t\t\t' + this.listOfPrograms[i].getData();
         }
+        return listOfAllPrograms;
+    }
 
-        this.listOfThePrograms = function () {
-            var listOfAllPrograms = '';
-            for (var i = 0; i < this.listOfPrograms.length; i++) {
-                listOfAllPrograms += '\t\t\t' + this.listOfPrograms[i].getData();
-            }
-            return listOfAllPrograms;
-        }
-
-        this.getData = function () {
-            return '' + this.name + ' has ' + this.numberOfMoviesInAllPrograms() + '\n' + this.listOfThePrograms();
-        }
+    Festival.prototype.getData = function () {
+        return '' + this.name + ' has ' + this.numberOfMoviesInAllPrograms() + '\n' + this.listOfThePrograms();
     }
 
 
