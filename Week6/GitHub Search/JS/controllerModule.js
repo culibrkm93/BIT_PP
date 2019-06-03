@@ -4,6 +4,8 @@ var controllerModule = (function (data, ui) {
         ui.displayUsers(users);
     }
 
+
+
     function setupEventListeners() {
         $('.search-bar').keydown(function (e) {
             if (e.keyCode === 13) {
@@ -12,10 +14,18 @@ var controllerModule = (function (data, ui) {
                 data.getUsers(searchStr, after);
             }
         })
+
     }
+    // function newEventListener() {
+    //     $(ui.searchResult).click(function (e) {
+    //         data.getRepositories(searchResult);
+
+    //     })
+    // }
 
     function init() {
-        setupEventListeners()
+        setupEventListeners();
+        // newEventListener()
     }
 
     return {

@@ -1,0 +1,16 @@
+$bgcol:#343a40;
+$textcol1:white;
+
+header, footer{
+    background-color:$bgcol;
+    color: $textcol1;
+}
+
+.navbar-brand{
+    text-decoration: none;
+    color: white;
+}
+
+.input{
+    align-content: right;
+}

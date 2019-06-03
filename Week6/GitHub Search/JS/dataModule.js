@@ -8,10 +8,20 @@ var dataModule = (function () {
         })
     }
 
+    function getRepositories(user, onSuccess) {
+        var user = this.login
+        var requestRepUrl = 'https://api.github.com/search/users/:' + user + '/repos';
+        $.get(requestRepUrl, function (reps) {
+            onSuccess(reps.items);
+            console.log('test');
+        })
+    }
+
 
 
     return {
-        getUsers: getUsers
+        getUsers: getUsers,
+        getRepositories: getRepositories
     }
 
 })();
