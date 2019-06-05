@@ -28,13 +28,33 @@ footer {
   align-content: right; }
 
 .tv-show {
-  width: 100%; }
+  width: 32%;
+  margin: 3px;
+  padding: 0;
+  border: 1px solid grey;
+  border-radius: 10px; }
 
 img {
-  width: 100%; }
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border-radius: 10px 10px 0 0; }
 
 .show-name {
   text-align: center;
   text-decoration: none; }
+
+div .single-img {
+  width: 100%;
+  border-radius: 0; }
+
+ul {
+  font-size: 22px;
+  font-weight: 600; }
+
+li {
+  font-size: 16px;
+  font-weight: 200;
+  margin-left: 40px; }
 
 /*# sourceMappingURL=style.css.map */
