@@ -1,12 +1,12 @@
-const uiModule = (function () {
-  const $searchInput = $(".input");
-  const $showArea = $(".shows");
 
-  function renderShows(shows) {
-    $showArea.append('<h1 class="main-title">Popular Shows</h1>')
-    shows.forEach(function (show) {
+const $searchInput = $(".input");
+const $showArea = $(".shows");
 
-      const template = `
+function renderShows(shows) {
+  $showArea.append('<h1 class="main-title">Popular Shows</h1>')
+  shows.forEach(function (show) {
+
+    const template = `
         <a href="#">
           <div class="col-4 tv-show d-inline-block"  data-show-id="${show.id}">
             <img src="${show.image.medium}" alt="">
@@ -14,31 +14,31 @@ const uiModule = (function () {
           </div>
         </a>`;
 
-      $showArea.append(template);
-    });
+    $showArea.append(template);
+  });
 
-  }
+}
 
-  function renderSingleShow(show) {
-    $showArea.html('');
-    $showArea.append('<h1 class="main-title">' + show.name + '</h1>')
+function renderSingleShow(show) {
+  $showArea.html('');
+  $showArea.append('<h1 class="main-title">' + show.name + '</h1>')
 
-    let seasons = '';
-    console.log(show);
-    show._embedded.seasons.forEach(function (season) {
-      console.log(season);
-      seasons += '<li class="seasons-list">' + season.premiereDate + ' - ' + season.endDate + '</li>';
-    });
+  let seasons = '';
 
-    let cast = '';
-    console.log(show);
-    show._embedded.cast.forEach(function (members) {
-      cast += '<li class="cast-list">' + members.person.name + '</li>';
-    });
+  show._embedded.seasons.forEach(function (season) {
 
-    console.log(seasons);
+    seasons += '<li class="seasons-list">' + season.premiereDate + ' - ' + season.endDate + '</li>';
+  });
 
-    const templateString = `
+  let cast = '';
+
+  show._embedded.cast.forEach(function (members) {
+    cast += '<li class="cast-list">' + members.person.name + '</li>';
+  });
+
+
+
+  const templateString = `
     <div class="single-show">
       <div class="row">  
         <div class="col-8 image-area">
@@ -60,15 +60,44 @@ const uiModule = (function () {
 
 
 
-    $showArea.append(templateString);
-  }
+  $showArea.append(templateString);
+};
 
-  // function getSearchInput() {
-  //   return $searchInput.val();
-  // }
+function showSearch(shows) {
+  $showArea.html('');
+  shows.forEach(function (show) {
+    console.log(show.show.image)
+    if (show.show.image === null) {
+      $('img').attr('class', 'broken-img');
+      $('img').attr('src', 'https://tinyurl.com/y782eus8');
+    } else {
+      const template = `
+          <a href="#">
+            <div class="col-4 tv-show d-inline-block"  data-show-id="${show.show.id}">
+              <img src="${show.show.image.medium}" alt="">
+              <h4 class="show-name">${show.show.name}</h4>
+            </div>
+          </a>`;
 
-  return {
-    renderShows,
-    renderSingleShow
-  };
-})();
+      $showArea.append(template);
+    }
+  })
+};
+
+
+
+
+
+
+
+
+// function getSearchInput() {
+//   return $searchInput.val();
+// }
+
+export {
+  renderShows,
+  renderSingleShow,
+  showSearch
+};
+

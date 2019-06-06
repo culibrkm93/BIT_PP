@@ -1,25 +1,46 @@
-const controllerModule = (function (data, ui) {
+import * as ui from './uiModule.js';
+import * as data from './dataModule.js';
 
-    function setupListenersOnShowClick() {
-        $('.tv-show').on('click', function () {
-            const showId = $(this).attr('data-show-id');
+function setupListenersOnShowClick() {
+    $('.tv-show').on('click', function () {
+        const showId = $(this).attr('data-show-id');
 
-            data.getSingleShow(showId, function (showData) {
+        data.getSingleShow(showId)
+            .then(showData => {
                 ui.renderSingleShow(showData);
             });
-        })
-    };
+    });
 
-    function init() {
-        data.getPopShows(function (shows) {
-            ui.renderShows(shows);
-            setupListenersOnShowClick();
-        });
+};
 
-    }
+function searchEventListener() {
+    $('.input').on('keypress', function (e) {
 
-    return {
-        init
-    }
+        if (e.keyCode === 13) {
+            e.preventDefault();
 
-})(dataModule, uiModule);
+            const userInput = $(this).val();
+
+            data.getShows(userInput)
+                .then(userInput => {
+                    ui.showSearch(userInput);
+                })
+        }
+    })
+
+}
+
+
+function init() {
+    searchEventListener()
+    data.getPopShows()
+        .then(ui.renderShows)
+        .then(setupListenersOnShowClick)
+
+};
+
+
+
+export {
+    init
+}

@@ -21,7 +21,8 @@
 
                     <a class="navbar-brand" href="./index.html">Bit Show</a>
                     <form class="form-inline">
-                        <input class="form-control input" type="search" placeholder="Search" aria-label="Search">
+                        <input class="form-control input" type="search" placeholder="Search" value=""
+                            aria-label="Search">
                     </form>
                 </nav>
             </div>
@@ -43,12 +44,9 @@
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
-    <script src="./JS/dataModule.js"></script>
-    <script src="./JS/uiModule.js"></script>
-    <script src="./JS/controllerModule.js"></script>
-
-    <script>
-        $(controllerModule.init);
+    <script type="module">
+        import * as controllerModule from './JS/controllerModule.js'
+        $(controllerModule.init)
     </script>
 </body>
 
