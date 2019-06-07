@@ -24,10 +24,10 @@ function searchEventListener() {
             data.getShows(userInput)
                 .then(userInput => {
                     ui.showSearch(userInput);
+                    setupListenersOnShowClick()
                 })
         }
     })
-
 }
 
 
