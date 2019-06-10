@@ -10,7 +10,7 @@ function renderShows(shows) {
         <a href="#">
           <div class="col-4 tv-show d-inline-block"  data-show-id="${show.id}">
             <img src="${show.image.medium}" alt="">
-            <h4 class="show-name">${show.name}</h4>
+            <h5 class="show-name">${show.name}</h5>
           </div>
         </a>`;
 
@@ -75,7 +75,7 @@ function showSearch(shows) {
           <a href="#">
             <div class="col-4 tv-show d-inline-block"  data-show-id="${show.show.id}">
               <img src="${show.show.image.medium}" alt="">
-              <h4 class="show-name">${show.show.name}</h4>
+              <h5 class="show-name">${show.show.name}</h5>
             </div>
           </a>`;
 
